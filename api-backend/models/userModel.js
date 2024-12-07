@@ -1,27 +1,39 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const userSchema = mongoose.Schema({
+const userSchema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   email: {
     type: String,
-    required: true,
+    required: [true, 'Email is required'],
     unique: true,
-    lowercase: true,
-  },
+  },  
   password: {
     type: String,
-    required: true
+    required: true,
   },
   role: {
     type: String,
-    enum: ['user', 'admin'],
-    default: 'user'
+    required: true,
   },
-}, {timestamps: true});
+  socketId: {
+    type: String, // Le socketId doit être une chaîne de caractères
+    unique: true, // Chaque utilisateur doit avoir un socketId unique
+    sparse: true, // Si le socketId n'est pas fourni, il n'est pas obligatoire
+  },
+  connected: {
+    type: Boolean,
+    default: false,
+  },
+  lastSeen: {
+    type: Date,
+    default: Date.now,
+  },
+});
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model("User", userSchema);
+
 module.exports = User;

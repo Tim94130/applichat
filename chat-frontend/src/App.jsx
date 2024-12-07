@@ -20,10 +20,6 @@ function App() {
     setIsAuthenticated(false);
   };
 
-  useEffect(() => {
-    setIsAuthenticated(!!localStorage.getItem('token'));
-  }, []);
-
   return (
     <Router>
 <nav className="navbar">

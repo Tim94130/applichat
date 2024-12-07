@@ -1,0 +1,61 @@
+const Message = require("../models/Message");
+
+// Enregistrer un message
+const saveMessage = async (senderId, recipientId, content) => {
+  try {
+    // Créer un message dans la base de données
+    const message = new Message({
+      senderId,
+      recipientId,
+      content,
+    });
+    await message.save();
+  } catch (err) {
+    console.error("Erreur lors de la sauvegarde du message:", err);
+    throw err;
+  }
+};
+
+// Récupérer l'historique des messages
+const getMessageHistory = async (userId, limit = 10) => {
+  try {
+    const messages = await Message.find({
+      $or: [{ senderId: userId }, { recipientId: userId }],
+    })
+      .sort({ timestamp: -1 }) // Trier les messages du plus récent au plus ancien
+      .limit(limit); // Limiter à un certain nombre de messages (par défaut 10)
+
+    return messages;
+  } catch (err) {
+    console.error(
+      "Erreur lors de la récupération de l'historique des messages:",
+      err
+    );
+    throw err;
+  }
+};
+
+const getMessagesBetweenUsers = async (user1, user2, limit = 20) => {
+  try {
+    const messages = await Message.find({
+      $or: [
+        { senderId: user1, recipientId: user2 },
+        { senderId: user2, recipientId: user1 },
+      ],
+    })
+      .sort({ timestamp: -1 }) // Trier du plus récent au plus ancien
+      .limit(limit);
+
+    return messages;
+  } catch (error) {
+    console.error("Erreur lors de la récupération des messages :", error);
+    throw new Error(
+      "Impossible de récupérer les messages entre ces utilisateurs."
+    );
+  }
+};
+
+module.exports = {
+  saveMessage,
+  getMessageHistory,
+};

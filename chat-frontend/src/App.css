@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 #root {
@@ -28,7 +28,7 @@ body {
 }
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -285,4 +285,15 @@ body {
   color: #d9534f; /* Red for error messages */
   margin-top: 0.5rem;
   text-align: center;
+}
+.system-message {
+  color: #ffffff;
+  background-color: #f44336; /* Rouge pour les avertissements */
+  padding: 5px 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+  font-size: 14px;
+}
+.system-message.warning {
+  background-color: #ff9800; /* Orange pour les avertissements */
 }
